@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NDLSS - Maintenance</title>
+  <style>
+    /* Import custom font */
+    @font-face {
+      font-family: 'ABCDiatypePlus';
+      src: url('fonts/ABCDiatypePlusVariable-Trial.woff') format('woff');
+      font-weight: 100 900;
+      font-display: swap;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'ABCDiatypePlus', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #0a0a0a;
+      color: #ffffff;
+    }
+
+    /* Contact aligned hard-left */
+    .contact {
+      position: absolute;
+      top: 50%;
+      left: 2rem;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      text-align: left;
+    }
+
+    .contact h2 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    /* Centered logo + message */
+    .center {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 2rem;
+      background-color: #222;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #aaa;
+      line-height: 1.5;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 2rem;
+      width: 100%;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <!-- Contact fixed hard-left -->
+  <div class="contact">
+    <h2>Contact</h2>
+    <a href="https://instagram.com/ndlss.co">Instagram↗</a>
+    <a href="mailto:mgmt@ndlss.co">General Inquiries↗</a>
+    <a href="mailto:mgmt@ndlss.co">Release Projects↗</a>
+    <a href="mailto:mgmt@ndlss.co">Events↗</a>
+    <a href="mailto:mgmt@ndlss.co">Partnerships↗</a>
+  </div>
+
+  <!-- Centered logo + message -->
+  <div class="center">
+    <div class="logo">NDLSS</div>
+    <h1>We’ll be back soon</h1>
+    <p>
+      NDLSS is currently undergoing maintenance.<br>
+      We’re working hard to bring you an improved experience.
+    </p>
+  </div>
+
+  <footer>
+    &copy; 2025 NDLSS. All rights reserved.
+  </footer>
+</body>
+</html>
