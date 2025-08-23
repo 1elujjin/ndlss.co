@@ -2076,3 +2076,28 @@ em,em *,i,i * {
     z-index: 800;
     pointer-events: auto
 }
+
+/* --- 3D Stage (fixed, centered) --- */
+#stage {
+  position: fixed;
+  inset: 0;
+  pointer-events: none; /* your site remains clickable */
+  display: grid;
+  place-items: center;
+  z-index: 0; /* header/nav stay on top if they have >0 */
+}
+
+/* Hide scrollbar but keep page scrollable */
+html, body {
+  height: auto;
+  min-height: 400vh; /* gives us some scroll to drive rotation */
+  scroll-behavior: smooth;
+}
+body {
+  overflow-y: scroll;
+  background: #000; /* looks good with reflections; change if you want */
+}
+
+/* Cross-browser scrollbar hiding */
+body::-webkit-scrollbar { width: 0; height: 0; }
+body { -ms-overflow-style: none; scrollbar-width: none; }

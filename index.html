@@ -2,9 +2,10 @@
 <html lang="en">
 
 <head>
+    <script type="importmap"> { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.177.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/" } } </script>
     <title>ndlss ● mgmt & label</title>
-    <meta name="description" content="Meet CRC Studio: a design & development studio founded in 2019 by Yoko Homareda and Rémi B. Loizeau. Based in France — Nantes.">
-    <meta name="keywords" content="Typography, Branding, Logo, Color palette, Responsive design, Wireframing, Vector graphics, Brand guidelines, Frontend development, User interface, UI, User experience, UX, Visual hierarchy, Grid system, Web, Interaction design">
+    <meta name="description" content="ndlss®: a record label founded in 2022 by Sena Lys. Based in Poland, we champion innovative music and emerging artists.">
+    <meta name="keywords" content="Record label, music distribution, management, artist management, label, whitelabel, distribution, music, art">
     <meta name="contact" content="mgmt@ndlss.co">
     <meta name="author" content="ndlss®">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -15,7 +16,7 @@
     <link rel="icon" type="image/svg+xml" href="https://crc.studio/assets/favicon/favicon.svg">
     <link rel="shortcut icon" href="https://crc.studio/assets/favicon/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="https://crc.studio/assets/favicon/apple-touch-icon.png">
-    <meta name="apple-mobile-web-app-title" content="crc.studio">
+    <meta name="apple-mobile-web-app-title" content="ndlss®">
 
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="theme-color" content="#000000">
@@ -91,7 +92,7 @@
 
 			<div class="m-row m-flc m-mta">
 				<span class="m-title m-r">2267 days</span>
-				<div class="e-now m-title m-r" data-now="H:M:S"></div>
+				<div class="e-now m-title m-r" data-now="H:M:S">15:17:22</div>
 			</div>
 
 		</div>
@@ -112,3 +113,141 @@
 
 
 </header>
+<div id="stage"></div>
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.177.0/build/three.module.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/loaders/GLTFLoader.js";
+import { RGBELoader } from "https://cdn.jsdelivr.net/npm/three@0.177.0/examples/jsm/loaders/RGBELoader.js";
+
+
+  const container = document.getElementById('stage');
+
+  // --- Renderer ---
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+  container.appendChild(renderer.domElement);
+
+  // --- Scene & Camera ---
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(0, 0, 6);
+
+  // --- Lighting ---
+  scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.6);
+  dir.position.set(3, 5, 2);
+  scene.add(dir);
+
+  // --- Environment (HDR for reflections) ---
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  pmrem.compileEquirectangularShader();
+
+  new RGBELoader()
+    .setPath('https://unpkg.com/@pmndrs/assets@1.0.4/hdri/')
+    .load('studio_small_09_1k.hdr', (hdrEquirect) => {
+      const envMap = pmrem.fromEquirectangular(hdrEquirect).texture;
+      hdrEquirect.dispose();
+      scene.environment = envMap;
+      scene.background = null; // keep transparent over body
+
+      loadModel();
+    });
+
+  let model = null;
+
+  function loadModel() {
+    const loader = new GLTFLoader();
+    loader.load('./logo.glb', (gltf) => {
+      model = gltf.scene;
+
+      // Center & scale
+      const box = new THREE.Box3().setFromObject(model);
+      const size = new THREE.Vector3();
+      box.getSize(size);
+      const maxDim = Math.max(size.x, size.y, size.z) || 1;
+      const scale = 2.2 / maxDim;
+      model.scale.setScalar(scale);
+
+      const center = new THREE.Vector3();
+      box.getCenter(center);
+      model.position.sub(center.multiplyScalar(scale));
+
+      // Metallic, reflective materials
+      model.traverse((obj) => {
+        if (obj.isMesh) {
+          const m = obj.material;
+          if (Array.isArray(m)) m.forEach(setMetal);
+          else if (m) setMetal(m);
+          obj.castShadow = false;
+          obj.receiveShadow = false;
+        }
+      });
+
+      scene.add(model);
+
+      if (model) {
+        const helper = new THREE.BoxHelper(model, 0xff0000);
+        scene.add(helper);
+      }
+
+    });
+  }
+
+  function setMetal(mat) {
+    if (!('metalness' in mat)) {
+      mat.metalness = 1.0;
+      mat.roughness = 0.1;
+    } else {
+      mat.metalness = 1.0;
+      mat.roughness = 0.08;
+    }
+    mat.envMapIntensity = 1.2;
+    mat.color?.set?.(0xffffff);
+    mat.needsUpdate = true;
+  }
+
+  // --- Scroll-driven rotation ---
+  let targetRotX = 0;
+  let targetRotY = 0;
+  let currentRotX = 0;
+  let currentRotY = 0;
+
+  function onScroll() {
+    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const t = window.scrollY / max; // 0..1
+    targetRotY = t * Math.PI * 4;   // 2 full turns across page
+    targetRotX = Math.sin(t * Math.PI) * 0.6; // subtle tilt
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // --- Resize ---
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // --- Animate ---
+  const clock = new THREE.Clock();
+  function animate() {
+    requestAnimationFrame(animate);
+    const dt = Math.min(clock.getDelta(), 0.03);
+
+    const smooth = 0.08; // lag/delay
+    currentRotX += (targetRotX - currentRotX) * smooth;
+    currentRotY += (targetRotY - currentRotY) * smooth;
+
+    if (model) {
+      model.rotation.x = currentRotX;
+      model.rotation.y = currentRotY;
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+</script>
