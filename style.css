@@ -318,15 +318,16 @@ p a:link,p a:visited,a.m-u:link,a.m-u:visited {
     transition: 2s
 }
 
-@media(hover) {
-    p a: hover,a.m-u:hover {
-        color:var(--color-acc);
-        padding-bottom: 3px;
-        -webkit-box-shadow: 0 1px 0 0 var(--color-acc);
-        box-shadow: 0 1px 0 0 var(--color-acc);
-        -webkit-transition: .5s;
-        transition: .5s
-    }
+@media (hover: hover) {
+  p a:hover,
+  a.m-u:hover {
+    color: var(--color-acc);
+    padding-bottom: 3px;
+    -webkit-box-shadow: 0 1px 0 0 var(--color-acc);
+    box-shadow: 0 1px 0 0 var(--color-acc);
+    -webkit-transition: .5s;
+    transition: .5s;
+  }
 }
 
 .m-ss,.m-ss * {
@@ -502,10 +503,10 @@ em,em *,i,i * {
     border: 3px solid var(--color-back)
 }
 
-@media(hover) {
-    : :-webkit-scrollbar-thumb:hover {
-        background:var(--color-txt)
-    }
+@media (hover: hover) {
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-txt);
+  }
 }
 
 .m-toast {
@@ -752,12 +753,12 @@ em,em *,i,i * {
     cursor: pointer
 }
 
-@media(hover) {
-    .m-tbl tr: hover td {
-        z-index:100;
-        background: var(--color-txt);
-        color: var(--color-back)
-    }
+@media (hover: hover) {
+  .m-tbl tr:hover td {
+    z-index: 100;
+    background: var(--color-txt);
+    color: var(--color-back);
+  }
 }
 
 .m-tbl th,.m-tbl td {
@@ -830,15 +831,25 @@ em,em *,i,i * {
     transition: 2s
 }
 
-@media(hover) {
-    .m-btn: hover {
-        border-radius:var(--brh);
-        text-decoration: none;
-        -webkit-box-shadow: 0px 5px 5px 0.8333333333px rgba(var(--color-rgb-grey-1000), 0.0835),0px 10px 10px 0.6666666667px rgba(var(--color-rgb-grey-1000), 0.067),0px 15px 15px 0.5px rgba(var(--color-rgb-grey-1000), 0.0505),0px 20px 20px 0.3333333333px rgba(var(--color-rgb-grey-1000), 0.034),0px 25px 25px 0.1666666667px rgba(var(--color-rgb-grey-1000), 0.0175),0px 30px 30px 0px rgba(var(--color-rgb-grey-1000), 0.001);
-        box-shadow: 0px 5px 5px 0.8333333333px rgba(var(--color-rgb-grey-1000), 0.0835),0px 10px 10px 0.6666666667px rgba(var(--color-rgb-grey-1000), 0.067),0px 15px 15px 0.5px rgba(var(--color-rgb-grey-1000), 0.0505),0px 20px 20px 0.3333333333px rgba(var(--color-rgb-grey-1000), 0.034),0px 25px 25px 0.1666666667px rgba(var(--color-rgb-grey-1000), 0.0175),0px 30px 30px 0px rgba(var(--color-rgb-grey-1000), 0.001);
-        -webkit-transition: .5s;
-        transition: .5s
-    }
+@media (hover: hover) {
+  .m-btn:hover {
+    border-radius: var(--brh);
+    text-decoration: none;
+    -webkit-box-shadow: 0px 5px 5px 0.8333333333px rgba(var(--color-rgb-grey-1000), 0.0835),
+                        0px 10px 10px 0.6666666667px rgba(var(--color-rgb-grey-1000), 0.067),
+                        0px 15px 15px 0.5px rgba(var(--color-rgb-grey-1000), 0.0505),
+                        0px 20px 20px 0.3333333333px rgba(var(--color-rgb-grey-1000), 0.034),
+                        0px 25px 25px 0.1666666667px rgba(var(--color-rgb-grey-1000), 0.0175),
+                        0px 30px 30px 0px rgba(var(--color-rgb-grey-1000), 0.001);
+    box-shadow:         0px 5px 5px 0.8333333333px rgba(var(--color-rgb-grey-1000), 0.0835),
+                        0px 10px 10px 0.6666666667px rgba(var(--color-rgb-grey-1000), 0.067),
+                        0px 15px 15px 0.5px rgba(var(--color-rgb-grey-1000), 0.0505),
+                        0px 20px 20px 0.3333333333px rgba(var(--color-rgb-grey-1000), 0.034),
+                        0px 25px 25px 0.1666666667px rgba(var(--color-rgb-grey-1000), 0.0175),
+                        0px 30px 30px 0px rgba(var(--color-rgb-grey-1000), 0.001);
+    -webkit-transition: .5s;
+    transition: .5s;
+  }
 }
 
 .m-btn svg {
@@ -1557,10 +1568,10 @@ em,em *,i,i * {
     aspect-ratio: 1/1
 }
 
-@media(hover) {
-    .p-pjt: hover .p-pjt-txt {
-        opacity:1
-    }
+@media (hover: hover) {
+  .p-pjt:hover .p-pjt-txt {
+    opacity: 1;
+  }
 }
 
 @media not all and (hover: hover) {
@@ -1633,11 +1644,11 @@ em,em *,i,i * {
     }
 }
 
-@media(hover) {
-    .p-bst-smm: hover {
-        background:var(--color-acc);
-        color: var(--color-orange-700)
-    }
+@media (hover: hover) {
+  .p-bst-smm:hover {
+    background: var(--color-acc);
+    color: var(--color-orange-700);
+  }
 }
 
 .l-frtpge-cvr {
